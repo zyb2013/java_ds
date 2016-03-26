@@ -1,4 +1,6 @@
-package collection.list;
+package test.list;
+
+import collection.list.LinkedList;
 
 public class LinkedListTest {
 
