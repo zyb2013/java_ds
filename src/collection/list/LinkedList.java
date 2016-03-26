@@ -58,6 +58,14 @@ public class LinkedList<T> {
 	public int size() {
 		return size;
 	}
+	
+	/**
+	 * 链表是否为空
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return size == 0;
+	}
 
 	/**
 	 * 结点
