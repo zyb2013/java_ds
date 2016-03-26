@@ -1,23 +1,23 @@
 package collection.list;
 
 /**
- * µ¥Á´±í
+ * å•é“¾è¡¨
  * @author Alias
- * @date 2016-3-26ÉÏÎç10:01:29
+ * @date 2016-3-26ä¸Šåˆ10:01:29
  */
 public class LinkedList<T> {
 	
-	// Í·½áµã
+	// å¤´ç»“ç‚¹
 	private Node<T> first;
 	
-	// Î²½áµã
+	// å°¾ç»“ç‚¹
 	private Node<T> last;
 	
-	// Á´±í´óĞ¡
+	// é“¾è¡¨å¤§å°
 	private int size;
 	
 	/**
-	 * ÔÚÁ´±íÍ·²¿Ìí¼ÓÊı¾İ
+	 * åœ¨é“¾è¡¨å¤´éƒ¨æ·»åŠ æ•°æ®
 	 * @param elem
 	 * @return
 	 */
@@ -36,7 +36,7 @@ public class LinkedList<T> {
 	}
 	
 	/**
-	 * ÔÚÁ´±íÎ²²¿Ìí¼ÓÊı¾İ
+	 * åœ¨é“¾è¡¨å°¾éƒ¨æ·»åŠ æ•°æ®
 	 * @param elem
 	 * @return
 	 */
@@ -52,33 +52,79 @@ public class LinkedList<T> {
 	}
 	
 	/**
-	 * »ñÈ¡Á´±íµÄ´óĞ¡
+	 * è·å–é“¾è¡¨çš„å¤§å°
 	 * @return
 	 */
 	public int size() {
 		return size;
 	}
 	
+	public boolean add(T elem, int index) {
+		if (elem == null) {
+			return false;
+		}
+		checkIndex(index);
+		if (index == size) {
+			addLast(elem);
+			size++;
+			return true;
+		}
+		if (index == 0) {
+			addFirst(elem);
+			size++;
+			return true;
+		}
+		Node<T> node = new Node<>(elem);
+		Node<T> preNode = findPreviousNode(index);
+		node.next = preNode.next;
+		preNode.next = node;
+		size++;
+		return true;
+	}
+	
 	/**
-	 * Á´±íÊÇ·ñÎª¿Õ
+	 * é“¾è¡¨æ˜¯å¦ä¸ºç©º
 	 * @return
 	 */
 	public boolean isEmpty() {
 		return size == 0;
 	}
+	
+	/**
+	 * æŸ¥æ‰¾å‰ä¸€ä¸ªèŠ‚ç‚¹
+	 * @param index
+	 * @return
+	 */
+	private Node<T> findPreviousNode(int index) {
+		Node<T> result = first;
+		for (int i = 0; i < index - 1; i++) {
+			result = result.next;
+		}
+		return result;
+	}
+	
+	/**
+	 * æ£€æŸ¥ç´¢å¼•æ˜¯å¦æ­£ç¡®
+	 * @param index
+	 */
+	private void checkIndex(int index) {
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException("index:" + index);
+		}
+	}
 
 	/**
-	 * ½áµã
+	 * ç»“ç‚¹
 	 * @author Alias
-	 * @date 2016-3-26ÉÏÎç10:33:00
+	 * @date 2016-3-26ä¸Šåˆ10:33:00
 	 * @param <T>
 	 */
 	private class Node<T> {
 		
-		// Êı¾İ
+		// æ•°æ®
 		private T elem;
 		
-		// ÏÂÒ»¸ö½áµã
+		// ä¸‹ä¸€ä¸ªç»“ç‚¹
 		private Node<T> next;
 		
 		public Node(T elem) {

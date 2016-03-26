@@ -8,6 +8,7 @@ public class LinkedListTest {
 		list.addFirst(200);
 		list.addFirst(300);
 		list.addLast(400);
+		list.add(500, 2);
 	}
 	
 }
