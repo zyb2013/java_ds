@@ -1,7 +1,7 @@
 package collection.list;
 
 /**
- * 单链表
+ * 双向链表
  * @author Alias
  * @date 2016-3-26上午10:01:29
  */
@@ -30,15 +30,14 @@ public class LinkedList<T> {
 	 * @return
 	 */
 	public boolean addFirst(T elem) {
-		if (elem == null) {
-			return false;
-		}
 		Node<T> node = new Node<>(elem);
-		node.next = first;
-		first = node;
-		if (last == null) {
+		if (isEmpty()) {
 			last = node;
+		} else {
+			node.next = first;
+			first.prev = node;
 		}
+		first = node;
 		size++;
 		return true;
 	}
@@ -49,16 +48,14 @@ public class LinkedList<T> {
 	 * @return
 	 */
 	public boolean addLast(T elem) {
-		if (elem == null) {
-			return false;
-		}
 		Node<T> node = new Node<>(elem);
 		if (isEmpty()) {
-			first = last = node;
+			first = node;
 		} else {
+			node.prev = last;
 			last.next = node;
-			last = node;
 		}
+		last = node;
 		size++;
 		return true;
 	}
@@ -72,9 +69,6 @@ public class LinkedList<T> {
 	}
 	
 	public boolean add(T elem, int index) {
-		if (elem == null) {
-			return false;
-		}
 		checkIndex(index);
 		if (index == size) {
 			return addLast(elem);
@@ -83,9 +77,11 @@ public class LinkedList<T> {
 			return addFirst(elem);
 		}
 		Node<T> node = new Node<>(elem);
-		Node<T> preNode = findPreviousNode(index);
-		node.next = preNode.next;
-		preNode.next = node;
+		Node<T> n = getNode(index);
+		node.prev = n.prev;
+		node.next = n;
+		node.prev.next = node;
+		n.prev = node;
 		size++;
 		return true;
 	}
@@ -125,6 +121,7 @@ public class LinkedList<T> {
 			return false;
 		}
 		first = first.next;
+		first.prev = null;
 		size--;
 		return true;
 	}
@@ -137,9 +134,10 @@ public class LinkedList<T> {
 		if (isEmpty()) {
 			return false;
 		}
-		Node<T> preNode = findPreviousNode(size - 1);
+		Node<T> preNode = last.prev;
 		last = preNode;
 		preNode.next = null;
+		preNode.prev = null;
 		size--;
 		return true;
 	}
@@ -158,8 +156,9 @@ public class LinkedList<T> {
 			return removeLast();
 		}
 		Node<T> node = getNode(index);
-		Node<T> preNode = findPreviousNode(index);
+		Node<T> preNode = node.prev;
 		preNode.next = node.next;
+		node.next.prev = preNode;
 		node = null;
 		size--;
 		return true;
@@ -213,6 +212,7 @@ public class LinkedList<T> {
 	 * @param index
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private Node<T> findPreviousNode(int index) {
 		Node<T> result = first;
 		for (int i = 0; i < index - 1; i++) {
@@ -244,6 +244,9 @@ public class LinkedList<T> {
 		
 		// 下一个结点
 		Node<T> next;
+		
+		// 指向前一个结点
+		Node<T> prev;
 		
 		public Node(T elem) {
 			this.elem = elem;
