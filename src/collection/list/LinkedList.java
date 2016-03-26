@@ -50,6 +50,14 @@ public class LinkedList<T> {
 		size++;
 		return true;
 	}
+	
+	/**
+	 * 获取链表的大小
+	 * @return
+	 */
+	public int size() {
+		return size;
+	}
 
 	/**
 	 * 结点
