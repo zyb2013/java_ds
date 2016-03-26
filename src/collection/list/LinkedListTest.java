@@ -11,13 +11,20 @@ public class LinkedListTest {
 		list.add(500, 2);
 		list.add(800, 5);
 		
-		for (int i = 0; i < list.size(); i++) {
-			System.out.print(list.get(i) + " ");
-		}
-		System.out.println("\nsize:" + list.size());
+		System.out.println(list);
 		
-		System.out.println(list.contains(800));
-		System.out.println(list.contains(888));
+//		System.out.println(list.contains(800));
+//		System.out.println(list.contains(888));
+		
+		list.removeFirst();
+		
+		list.removeLast();
+		
+		list.add(888, 2);
+		
+		list.remove(2);
+		
+		System.out.println(list);
 	}
 	
 }

@@ -65,12 +65,10 @@ public class LinkedList<T> {
 		}
 		checkIndex(index);
 		if (index == size) {
-			addLast(elem);
-			return true;
+			return addLast(elem);
 		}
 		if (index == 0) {
-			addFirst(elem);
-			return true;
+			return addFirst(elem);
 		}
 		Node<T> node = new Node<>(elem);
 		Node<T> preNode = findPreviousNode(index);
@@ -87,11 +85,7 @@ public class LinkedList<T> {
 	 */
 	public T get(int index) {
 		checkIndex(index);
-		Node<T> node = first;
-		for (int i = 0; i < index; i++) {
-			node = node.next;
-		}
-		return node.elem;
+		return getNode(index).elem;
 	}
 	
 	/**
@@ -111,12 +105,82 @@ public class LinkedList<T> {
 	}
 	
 	/**
+	 * 在链表的头部删除元素
+	 * @return
+	 */
+	public boolean removeFirst() {
+		if (isEmpty()) {
+			return false;
+		}
+		first = first.next;
+		size--;
+		return true;
+	}
+	
+	/**
+	 * 在链表尾部删除元素
+	 * @return
+	 */
+	public boolean removeLast() {
+		if (isEmpty()) {
+			return false;
+		}
+		Node<T> preNode = findPreviousNode(size - 1);
+		last = preNode;
+		preNode.next = null;
+		size--;
+		return true;
+	}
+	
+	/**
+	 * 在链表指定位置删除元素
+	 * @param index
+	 * @return
+	 */
+	public boolean remove(int index) {
+		checkIndex(index);
+		if (index == 0) {
+			return removeFirst();
+		}
+		if (index == size - 1) {
+			return removeLast();
+		}
+		Node<T> node = getNode(index);
+		Node<T> preNode = findPreviousNode(index);
+		preNode.next = node.next;
+		node = null;
+		size--;
+		return true;
+	}
+	
+	/**
 	 * 链表是否为空
 	 * @return
 	 */
 	public boolean isEmpty() {
 		return size == 0;
 		
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		result.append("size:").append(size);
+		result.append(" [");
+		for (int i = 0; i < size; i++) {
+			result.append(get(i)).append(",");
+		}
+		result.deleteCharAt(result.length() - 1);
+		result.append("]");
+		return result.toString();
+	}
+	
+	private Node<T> getNode(int index) {
+		Node<T> node = first;
+		for (int i = 0; i < index; i++) {
+			node = node.next;
+		}
+		return node;
 	}
 	
 	/**
@@ -141,7 +205,7 @@ public class LinkedList<T> {
 			throw new IndexOutOfBoundsException("index:" + index);
 		}
 	}
-
+	
 	/**
 	 * 结点
 	 * @author Alias
