@@ -83,11 +83,26 @@ public class LinkedList<T> {
 	}
 	
 	/**
+	 * 获取链表指定位置的数据
+	 * @param index
+	 * @return
+	 */
+	public T get(int index) {
+		checkIndex(index);
+		Node<T> node = first;
+		for (int i = 0; i < index; i++) {
+			node = node.next;
+		}
+		return node.elem;
+	}
+	
+	/**
 	 * 链表是否为空
 	 * @return
 	 */
 	public boolean isEmpty() {
 		return size == 0;
+		
 	}
 	
 	/**
@@ -122,10 +137,10 @@ public class LinkedList<T> {
 	private class Node<T> {
 		
 		// 数据
-		private T elem;
+		T elem;
 		
 		// 下一个结点
-		private Node<T> next;
+		Node<T> next;
 		
 		public Node(T elem) {
 			this.elem = elem;
