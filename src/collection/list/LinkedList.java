@@ -16,6 +16,14 @@ public class LinkedList<T> {
 	// 链表大小
 	private int size;
 	
+	public LinkedList() {
+		
+	}
+	
+	public LinkedList(LinkedList<T> other) {
+		copy(other);
+	}
+	
 	/**
 	 * 在链表头部添加数据
 	 * @param elem
@@ -45,8 +53,12 @@ public class LinkedList<T> {
 			return false;
 		}
 		Node<T> node = new Node<>(elem);
-		last.next = node;
-		last = node;
+		if (isEmpty()) {
+			first = last = node;
+		} else {
+			last.next = node;
+			last = node;
+		}
 		size++;
 		return true;
 	}
@@ -173,6 +185,19 @@ public class LinkedList<T> {
 		result.deleteCharAt(result.length() - 1);
 		result.append("]");
 		return result.toString();
+	}
+	
+	/**
+	 * 从另外一个链表拷贝数据
+	 * @param other
+	 */
+	private void copy(LinkedList<T> other) {
+		if (other == null) {
+			return;
+		}
+		for (int i = 0; i < other.size; i++) {
+			addLast(other.get(i));
+		}
 	}
 	
 	private Node<T> getNode(int index) {
