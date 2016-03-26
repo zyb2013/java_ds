@@ -95,6 +95,22 @@ public class LinkedList<T> {
 	}
 	
 	/**
+	 * 链表中是否包含指定的数据
+	 * @param elem
+	 * @return
+	 */
+	public boolean contains(T elem) {
+		Node<T> node = first;
+		while (node != null) {
+			if (node.elem.equals(elem)) {
+				return true;
+			}
+			node = node.next;
+		}
+		return false;
+	}
+	
+	/**
 	 * 链表是否为空
 	 * @return
 	 */

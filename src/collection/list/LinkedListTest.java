@@ -14,6 +14,10 @@ public class LinkedListTest {
 		for (int i = 0; i < list.size(); i++) {
 			System.out.print(list.get(i) + " ");
 		}
+		System.out.println("\nsize:" + list.size());
+		
+		System.out.println(list.contains(800));
+		System.out.println(list.contains(888));
 	}
 	
 }
