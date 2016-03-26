@@ -78,10 +78,14 @@ public class LinkedList<T> {
 		}
 		Node<T> node = new Node<>(elem);
 		Node<T> n = getNode(index);
-		node.prev = n.prev;
+//		node.prev = n.prev;
+//		node.next = n;
+//		node.prev.next = node;
+//		n.prev = node;
 		node.next = n;
-		node.prev.next = node;
+		node.prev = n.prev;
 		n.prev = node;
+		node.prev.next = node;
 		size++;
 		return true;
 	}
@@ -208,20 +212,6 @@ public class LinkedList<T> {
 	}
 	
 	/**
-	 * 查找前一个节点
-	 * @param index
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private Node<T> findPreviousNode(int index) {
-		Node<T> result = first;
-		for (int i = 0; i < index - 1; i++) {
-			result = result.next;
-		}
-		return result;
-	}
-	
-	/**
 	 * 检查索引是否正确
 	 * @param index
 	 */
@@ -237,6 +227,7 @@ public class LinkedList<T> {
 	 * @date 2016-3-26上午10:33:00
 	 * @param <T>
 	 */
+	@SuppressWarnings("hiding")
 	private class Node<T> {
 		
 		// 数据
