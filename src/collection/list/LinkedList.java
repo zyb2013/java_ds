@@ -66,12 +66,10 @@ public class LinkedList<T> {
 		checkIndex(index);
 		if (index == size) {
 			addLast(elem);
-			size++;
 			return true;
 		}
 		if (index == 0) {
 			addFirst(elem);
-			size++;
 			return true;
 		}
 		Node<T> node = new Node<>(elem);

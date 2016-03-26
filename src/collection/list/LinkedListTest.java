@@ -9,6 +9,7 @@ public class LinkedListTest {
 		list.addFirst(300);
 		list.addLast(400);
 		list.add(500, 2);
+		list.add(800, 5);
 		
 		for (int i = 0; i < list.size(); i++) {
 			System.out.print(list.get(i) + " ");
