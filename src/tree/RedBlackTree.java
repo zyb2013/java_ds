@@ -17,8 +17,6 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 	// 根节点
 	private Node root;
 	
-	private int size;
-	
 	/**
 	 * 根据Key查找对应的Value
 	 * @param key
@@ -45,15 +43,66 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 	 * @return
 	 */
 	public V put(K key, V value) {
+		if (key == null) {
+			throw new IllegalArgumentException("key is null");
+		}
+		Node node = new Node(key, value);
+		if (root == null) {
+			root = node;
+			node.color = BLACK;
+			return value;
+		}
+		Node current = root;
+		Node parent = root;
+		int cmp = 0;
+		while (current != null) {
+			parent = current;
+			cmp = key.compareTo(current.key);
+			if (cmp < 0) {
+				current = current.left;
+			} else if (cmp > 0) {
+				current = current.right;
+			} else {
+				current.value = value;
+			}
+		}
+		if (cmp < 0) {
+			parent.left = node;
+		} else if (cmp > 0) {
+			parent.right = node;
+		}
+		fixAfterInsertion(parent);
 		return null;
 	}
 	
+	private void fixAfterInsertion(Node node) {
+		if (!isRed(node.left) && isRed(node.right)) {
+			rotateLeft(node);
+		}
+		if (isRed(node) && isRed(node.left.left)) {
+			rotateRight(node);
+		}
+		if (isRed(node.left) && isRed(node.right)) {
+			flipColor(node);
+		}
+	}
+	
+	private void flipColor(Node node) {
+		node.color = RED;
+		node.left.color = BLACK;
+		node.right.color = BLACK;
+	}
+
 	/**
 	 * 左旋
 	 * @param node
 	 */
 	private void rotateLeft(Node node) {
-		
+		Node tmp = node.right;
+		node.right = tmp.left;
+		tmp.left = node;
+		node.color = tmp.color;
+		tmp.color = BLACK;
 	}
 	
 	/**
@@ -61,7 +110,23 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 	 * @param node
 	 */
 	private void rotateRight(Node node) {
-		
+		Node tmp = node.left;
+		node.left = tmp.right;
+		tmp.right = node;
+		node.color = tmp.color;
+		tmp.color = BLACK;
+	}
+	
+	/**
+	 * 是否红色节点
+	 * @param node
+	 * @return
+	 */
+	private boolean isRed(Node node) {
+		if (node == null) {
+			return false;
+		}
+		return node.color;
 	}
 	
 	/**
@@ -85,6 +150,17 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 		
 		// 结点颜色
 		private boolean color = RED;
+		
+		public Node(K key, V value) {
+			this(key, value, null, null);
+		}
+		
+		public Node(K key, V value, Node left, Node right) {
+			this.key = key;
+			this.value = value;
+			this.left = left;
+			this.right = right;
+		}
 		
 	}
 	
