@@ -75,6 +75,10 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 		return null;
 	}
 	
+	/**
+	 * 插入数据后，修正红黑树以保证平衡
+	 * @param node
+	 */
 	private void fixAfterInsertion(Node node) {
 		if (!isRed(node.left) && isRed(node.right)) {
 			rotateLeft(node);
@@ -87,6 +91,10 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 		}
 	}
 	
+	/**
+	 * 修改节点的颜色
+	 * @param node
+	 */
 	private void flipColor(Node node) {
 		node.color = RED;
 		node.left.color = BLACK;
