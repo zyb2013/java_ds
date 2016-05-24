@@ -71,7 +71,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 		} else if (cmp > 0) {
 			parent.right = node;
 		}
-		fixAfterInsertion(parent);
+		root = fixAfterInsertion(parent);
 		return null;
 	}
 	
@@ -79,16 +79,18 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 	 * 插入数据后，修正红黑树以保证平衡
 	 * @param node
 	 */
-	private void fixAfterInsertion(Node node) {
+	private Node fixAfterInsertion(Node node) {
+		Node result = node;
 		if (!isRed(node.left) && isRed(node.right)) {
-			rotateLeft(node);
+			result = rotateLeft(node);
 		}
 		if (isRed(node) && isRed(node.left.left)) {
-			rotateRight(node);
+			result = rotateRight(node);
 		}
 		if (isRed(node.left) && isRed(node.right)) {
 			flipColor(node);
 		}
+		return result;
 	}
 	
 	/**
@@ -105,24 +107,26 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 	 * 左旋
 	 * @param node
 	 */
-	private void rotateLeft(Node node) {
-		Node tmp = node.right;
-		node.right = tmp.left;
-		tmp.left = node;
-		node.color = tmp.color;
-		tmp.color = BLACK;
+	private Node rotateLeft(Node node) {
+		Node result = node.right;
+		node.right = result.left;
+		result.left = node;
+		node.color = result.color;
+		result.color = BLACK;
+		return result;
 	}
 	
 	/**
 	 * 右旋
 	 * @param node
 	 */
-	private void rotateRight(Node node) {
-		Node tmp = node.left;
-		node.left = tmp.right;
-		tmp.right = node;
-		node.color = tmp.color;
-		tmp.color = BLACK;
+	private Node rotateRight(Node node) {
+		Node result = node.left;
+		node.left = result.right;
+		result.right = node;
+		node.color = result.color;
+		result.color = BLACK;
+		return result;
 	}
 	
 	/**
