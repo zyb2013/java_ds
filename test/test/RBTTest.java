@@ -6,9 +6,9 @@ public class RBTTest {
 
 	public static void main(String[] args) {
 		RedBlackTree<Integer, Integer> rbt = new RedBlackTree<>();
-		rbt.put(1, 100);
-		rbt.put(2, 200);
-		rbt.put(3, 300);
+		for (int i = 0; i < 10; i++) {
+			rbt.put(i, 100 + i);
+		}
 	}
 	
 }

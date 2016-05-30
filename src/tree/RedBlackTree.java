@@ -71,8 +71,25 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 		} else if (cmp > 0) {
 			parent.right = node;
 		}
-		root = fixAfterInsertion(parent);
+		root = put(root, key, value);
+		root.color = BLACK;
 		return null;
+	}
+	
+	private Node put(Node node, K key, V value) {
+		if (node == null) {
+			return new Node(key, value);
+		}
+		int cmp = key.compareTo(node.key);
+		if (cmp < 0) {
+			node.left = put(node.left, key, value);
+		} else if (cmp > 0) {
+			node.right = put(node.right, key, value);
+		} else {
+			node.value = value;
+		}
+		node = fixAfterInsertion(node);
+		return node;
 	}
 	
 	/**
@@ -84,7 +101,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 		if (!isRed(node.left) && isRed(node.right)) {
 			result = rotateLeft(node);
 		}
-		if (isRed(node) && isRed(node.left.left)) {
+		if (isRed(node.left) && isRed(node.left.left)) {
 			result = rotateRight(node);
 		}
 		if (isRed(node.left) && isRed(node.right)) {
